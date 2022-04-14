@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yoon.mapper.BoardMapper">
+
+    <select id="boardSearch" resultType="com.yoon.model.BoardVO">
+        select bno,title,writer,regdate,viewcnt
+        from board order by bno desc
+
+    </select>
+    <insert id="boardWrite">
+        insert into board (bno, title,content,writer)
+        values(#{bno},#{title},#{content},#{writer})
+    </insert>
+
+    <select id="searchbno" resultType="int">
+        select max(BNO) from board
+    </select>
+
+
+</mapper>

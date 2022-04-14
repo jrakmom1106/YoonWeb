@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yoon.mapper.MemberMapper">
+
+    <insert id="memberJoin">
+        insert into book_member values(#{memberId}, #{memberPw} )
+
+    </insert>
+
+    <select id="idCheck" resultType="int">
+
+        select count(*) from book_member where memberId = #{memberId}
+
+    </select>
+
+    <select id="memberFind" resultType="map">
+        select * from book_member where memberId = #{memberId} AND memberPw =#{memberPw}
+    </select>
+
+</mapper>
