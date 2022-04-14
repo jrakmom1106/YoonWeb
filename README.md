@@ -4,3 +4,5 @@
 툴 : Intellij  
 DB : OracleDB  
 FrameWork : Mybatis, Spring
+  
+진행도 : https://yn971106.tistory.com/ 참고 
