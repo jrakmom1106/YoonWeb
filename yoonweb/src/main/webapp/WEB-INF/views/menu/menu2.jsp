@@ -16,6 +16,7 @@
             <input type="text" placeholder="제목" id="subject" name="subject">
             <input type="text" placeholder="내용" id="writecontent" name="content">
             <button type="button" onclick="fn_boardRegi();">등록</button>
+
         </form>
 
     </div>
@@ -25,6 +26,8 @@
 <script src='/js/jquery-3.6.0.min.js?ver=1'></script>
 
 <script>
+
+
     function fn_boardRegi(){
         let title = $("#subject").val();
 

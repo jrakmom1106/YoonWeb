@@ -281,6 +281,7 @@
 
         let $globalStorage = $commons.storage.g_variable;
         let $random = $commons.util;
+        let $common = _commons().history;
 
 
         let idtext = container.querySelector('#idtext');

@@ -241,10 +241,14 @@ let _commons = function() {
 
 
 
+    let history={
+    };
 
+    let activate={};
 
         return _Self ={
             fetchAjax:_fetchAjax,
+
 
             data: {
                 // global: _LEGACY_GLOBAL_DATASET,
@@ -487,7 +491,35 @@ let _commons = function() {
                     return year+ "-" +month+ "-"+day+ "-"+hours+ "-"+min;
 
                 }
+            },
+            history:{
+                sethistory: function(url,newContent,id){
+                    let content = newContent;
+                    history[url]={
+                        content : content,
+                        id : id
+                    }
+                    console.log(history[url]);
+                },
+                gethistory: function(url){
+                    console.log('get' + history[url]);
+                    return history[url];
+                },
+                deletehistory : function(url){
+                    delete history[url];
+                }
+            },
+            activate:{
+                setactivate: function(url,id){
+                    activate={
+                        activate: url,
+                        id: id
+                    }
+
+
+                }
             }
+
         }
 }
 

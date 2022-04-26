@@ -11,6 +11,18 @@ public class BoardVO {
     private String regdate;    //게시물작성일자
     private int viewcnt;    //게시물조회수
 
+    //게시물 인덱스
+    private int NUM;
+
+    public int getNUM() {
+        return NUM;
+    }
+
+    public void setNUM(int NUM) {
+        this.NUM = NUM;
+    }
+
+
 
     public int getBno() {
         return bno;
@@ -69,6 +81,7 @@ public class BoardVO {
                 ", writer='" + writer + '\'' +
                 ", regdate='" + regdate + '\'' +
                 ", viewcnt=" + viewcnt +
+                ", NUM=" + NUM +
                 '}';
     }
 }

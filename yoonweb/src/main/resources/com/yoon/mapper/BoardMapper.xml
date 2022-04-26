@@ -5,18 +5,42 @@
 <mapper namespace="com.yoon.mapper.BoardMapper">
 
     <select id="boardSearch" resultType="com.yoon.model.BoardVO">
-        select bno,title,writer,regdate,viewcnt
-        from board order by bno desc
+        select bno, title, writer, regdate, viewcnt, NUM
+        from (select ROWNUM AS NUM, e.*
+              from (select * from board where writer like '%'||#{writer}||'%' and title like '%'||#{title}||'%' order by REGDATE desc) e)
+        where NUM between #{start} and #{last}
 
     </select>
+
     <insert id="boardWrite">
-        insert into board (bno, title,content,writer)
-        values(#{bno},#{title},#{content},#{writer})
+        insert into board (bno, title, content, writer)
+        values (#{bno}, #{title}, #{content}, #{writer})
     </insert>
 
     <select id="searchbno" resultType="int">
-        select max(BNO) from board
+        select max(BNO)
+        from board
     </select>
 
+    <select id="searchcnt" resultType="int">
+        select count(0)
+        from board
+        where writer like '%'||#{writer}||'%' and title like '%'||#{title}||'%'
+    </select>
 
+    <select id="selectBoard" resultType="com.yoon.model.BoardVO">
+        select *
+        from board
+        where bno = #{bno}
+    </select>
+
+    <delete id="boardRemove">
+        delete
+        from board
+        where bno = #{bno}
+    </delete>
+
+    <update id="boardUpdate">
+        update board set title = #{title} , content = #{content} where bno = #{bno}
+    </update>
 </mapper>
