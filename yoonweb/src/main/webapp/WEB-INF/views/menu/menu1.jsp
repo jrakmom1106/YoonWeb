@@ -66,6 +66,10 @@
 
         }
 
+        viewcnt.onchange = function(){
+            detailsearchbtn.click();
+        }
+
 
 
 
