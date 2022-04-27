@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <html>
 <head>
     <style>
@@ -167,8 +167,9 @@
                 })
             }).then(res => res.json())
                 .then(data => {
-
+                    console.log(data);
                     for (let i = 0; i < data.length; i++) {
+                        console.log(data[i].title);
 
                         let node = document.createElement('tr');
                         const template = `

@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <div id="contentwrap2">
-        <h2><span class="title">${title}</span></h2>
-        <p><span class="writer">${writer}</span> </p>
-        <p><span class="boardcontent">${content}</span> </p>
-        <p><span class="date">${regdate}</span> </p>
+        <h2> 제목 : <span class="title">${title}</span></h2>
+        <p> 작성자 : <span class="writer">${writer}</span> </p>
+        <p> 내용 : <span class="boardcontent">${content}</span> </p>
+        <p>작성일자 : <span class="date">${regdate}</span> </p>
 
         <button class="backbtn">뒤로가기</button>
         <button class="updatebtn" style="display: none">수정하기</button>

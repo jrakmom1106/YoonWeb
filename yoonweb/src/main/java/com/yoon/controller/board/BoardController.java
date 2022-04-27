@@ -23,7 +23,7 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
-    @RequestMapping(value = "/board/search.do")
+    @RequestMapping(value = "/board/search.do", produces = "application/text; charset=utf8")
     @ResponseBody
     public String boardSearchPOST(@RequestBody Map<String, String> map) throws Exception{
         System.out.println(" board 조회시작= ");

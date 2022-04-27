@@ -30,6 +30,4 @@
         <property name="dataSource" ref="datasource"></property>
     </bean>
 
-
-
 </beans>

@@ -40,7 +40,7 @@
 
             let url = 'menu/menu1.do'
             $('#main_content').load(url,function(){
-
+                $history.deletehistory("/board/updateboard.do");
             });
 
         }
