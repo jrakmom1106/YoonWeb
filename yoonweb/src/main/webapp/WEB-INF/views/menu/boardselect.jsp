@@ -4,7 +4,8 @@
         <p> 작성자 : <span class="writer">${writer}</span> </p>
         <p> 내용 : <span class="boardcontent">${content}</span> </p>
         <p>작성일자 : <span class="date">${regdate}</span> </p>
-        <p> 첨부파일 :<a href="fileDownload.do?fileName=${filename}">${filename}</a></p>
+        <p class="attachfile"> 첨부파일 :</p>
+
         <button class="backbtn">뒤로가기</button>
         <button class="updatebtn" style="display: none">수정하기</button>
         <button class="rmbtn" style="display: none">게시글 삭제</button>
@@ -25,10 +26,33 @@
         let changecontent =document.querySelector('#content');
         let $common = $commons.history
         let upbtn = document.querySelector('.updatebtn');
+        let attach = document.querySelector('.attachfile');
 
-
+        //노드생성
         let filetest = "${filename}";
         console.log(filetest);
+        let tt = filetest.slice(1,-1);
+        console.log(tt);
+        const arr = tt.split(", ");
+
+
+        for(let i = 0; i < arr.length;i++){
+            console.log(arr[i]);
+            let test = arr[i];
+            console.log(test);
+            let node = document.createElement("a")
+            let template = `
+        <a href="fileDownload.do?fileName=\${arr[i]}">\${arr[i]}
+        </a>`
+            node.innerHTML = template;
+            attach.appendChild(node);
+
+        }
+
+
+
+
+
 
 
         // authcheck

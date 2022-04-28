@@ -6,6 +6,7 @@ import com.yoon.service.BoardService;
 import org.apache.commons.io.FilenameUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class BoardController {
@@ -30,23 +28,23 @@ public class BoardController {
 
     @RequestMapping(value = "/board/search.do", produces = "application/text; charset=utf8")
     @ResponseBody
-    public String boardSearchPOST(@RequestBody Map<String, String> map) throws Exception{
+    public String boardSearchPOST(@RequestBody Map<String, String> map) throws Exception {
         System.out.println(" board 조회시작= ");
         Integer viewcnt = Integer.parseInt(map.get("view"));
         Integer nowpage = Integer.parseInt(map.get("pagenum"));
-        
+
         String title = map.get("title");
         System.out.println("title = " + title);
         String writer = map.get("writer");
         System.out.println("writer = " + writer);
 
 
-        Integer start = viewcnt * (nowpage-1) +1;
-        Integer last = start + viewcnt -1;
+        Integer start = viewcnt * (nowpage - 1) + 1;
+        Integer last = start + viewcnt - 1;
 
         System.out.println("start + last = " + start + last);
 
-        List list = boardService.boardSearch(start,last,writer,title);
+        List list = boardService.boardSearch(start, last, writer, title);
 
 
         System.out.println("list = " + list);
@@ -58,8 +56,14 @@ public class BoardController {
 
     @RequestMapping("/board/register.do")
     @ResponseBody
-    public String boardWrite(MultipartHttpServletRequest req) throws Exception{
+    public String boardWrite(MultipartHttpServletRequest req) throws Exception {
         System.out.println("게시글 등록 시작");
+
+        System.out.println("req = " + req);
+
+        String files = req.getParameter("files");
+        System.out.println("files = " + files);
+
 
         String title = req.getParameter("subject");
         System.out.println("title = " + title);
@@ -71,26 +75,48 @@ public class BoardController {
         System.out.println("date = " + date);
 
 
-        MultipartFile file = req.getFile("filename");
+        List<MultipartFile> file = req.getFiles("filename");
         System.out.println("file =" + file);
         String filename = "";
 
 
+        ArrayList<String> testlist = new ArrayList<String>();
         // file 첨부여부 확인
-        if(!file.isEmpty()){
+        if (!file.isEmpty()) {
+
+            System.out.println("file.get(0); = " + file.get(0));
+            System.out.println("file.get(1); = " + file.get(1));
+            System.out.println("tostring" + file.toString());
+
             System.out.println("비어있지 않음");
 
-        String originname = file.getOriginalFilename();
-        System.out.println("originname = " + originname);
+            for (int i = 0; i < file.size(); i++) {
 
-        String ext = FilenameUtils.getExtension(originname);
-        System.out.println("ext = " + ext);
 
-        UUID uuid = UUID.randomUUID();
-        filename = uuid + "."+ext;
-        file.transferTo(new File("C:\\filetest\\" + filename));
 
+                //원래이름 저장
+                String originname = file.get(i).getOriginalFilename();
+                System.out.println("originname = " + originname);
+
+                //확장자
+                String ext = FilenameUtils.getExtension(originname);
+                System.out.println("ext = " + ext);
+                //중복방지를 위한 UUID 설정
+                UUID uuid = UUID.randomUUID();
+                //저장되는 파일이름
+                filename = uuid + "." + ext;
+
+                file.get(i).transferTo(new File("C:\\filetest\\" + filename));
+
+
+                testlist.add(filename);
+
+            }
         }
+
+        System.out.println("testlist = " + testlist);
+        System.out.println("testlist.toString() = " + testlist.toString());
+
 
         BoardVO boarddata = new BoardVO();
 
@@ -102,14 +128,14 @@ public class BoardController {
         boarddata.setWriter(writer);
         boarddata.setRegdate(date);
         boarddata.setViewcnt(0);
-        boarddata.setFilename(filename);
+        boarddata.setFilename(testlist.toString());
         boardService.boardWrite(boarddata);
 
         return "ok";
     }
 
     @RequestMapping("getbno.do")
-    public String readBoard(@RequestBody Model model){
+    public String readBoard(@RequestBody Model model) {
         Object test = model.getAttribute("bno");
         System.out.println("test = " + test);
         return "";
@@ -117,19 +143,19 @@ public class BoardController {
 
     @RequestMapping("/board/boardcount.do")
     @ResponseBody
-    public Integer searchcount(@RequestBody Map<String, String> map) throws Exception{
+    public Integer searchcount(@RequestBody Map<String, String> map) throws Exception {
         System.out.println("검색 총 수 파악");
         String writer = map.get("writer");
         System.out.println("writer = " + writer);
         String title = map.get("title");
         System.out.println("title = " + title);
 
-        Integer result = boardService.searchcnt(writer,title);
+        Integer result = boardService.searchcnt(writer, title);
         System.out.println("result = " + result);
         return result;
     }
 
-    @RequestMapping(value="/board/selectboard.do", produces = "application/text; charset=utf8")
+    @RequestMapping(value = "/board/selectboard.do", produces = "application/text; charset=utf8")
     @ResponseBody
     public String selectBoard(@RequestBody Map<String, String> map) throws Exception {
         System.out.println("상세화면 조회 시작");
@@ -146,7 +172,7 @@ public class BoardController {
 
     @RequestMapping("/board/remove.do")
     @ResponseBody
-    public void removeBoard(@RequestBody Map<String, String> map) throws Exception{
+    public void removeBoard(@RequestBody Map<String, String> map) throws Exception {
         String stringbno = map.get("bno");
         Integer bno = Integer.parseInt(stringbno);
 
@@ -154,9 +180,9 @@ public class BoardController {
 
     }
 
-    @RequestMapping("/board/update.do" )
+    @RequestMapping("/board/update.do")
     @ResponseBody
-    public void updateBoard(@RequestBody Map<String,String> map )throws Exception{
+    public void updateBoard(@RequestBody Map<String, String> map) throws Exception {
         System.out.println("업데이트 진입");
 
         String title = map.get("title");
@@ -165,10 +191,10 @@ public class BoardController {
         System.out.println("content = " + content);
         String Stringbno = map.get("bno");
         System.out.println("Stringbno = " + Stringbno);
-        
+
         Integer bno = Integer.parseInt(Stringbno);
 
-        boardService.boardUpdate(title,content,bno);
+        boardService.boardUpdate(title, content, bno);
 
 
     }

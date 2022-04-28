@@ -161,6 +161,23 @@
             let myformdata = document.getElementById('formdata');
             let formData = new FormData(myformdata);
 
+            let filelist = document.getElementById("ex_file").files;
+
+            let sendList = new Array();
+
+            for(let i = 0; i< filelist.length;i++ ){
+                let fullname = filelist[i].name
+                let str = fullname.split('.');
+                let ext = str[1];
+
+                let data = new Object();
+                data.filename = fullname;
+                data.ext = ext;
+                sendList.push(data);
+            }
+            let jsonData = JSON.stringify(sendList);
+
+            formData.append("files",jsonData);
             formData.append("writer", writer);
             formData.append("date", date)
 
