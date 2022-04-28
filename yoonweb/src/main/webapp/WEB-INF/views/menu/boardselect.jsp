@@ -31,18 +31,23 @@
         //노드생성
         let filetest = "${filename}";
         console.log(filetest);
-        let tt = filetest.slice(1,-1);
-        console.log(tt);
-        const arr = tt.split(", ");
+        let converfilename = filetest.slice(1,-1);
+        console.log(converfilename);
+        const filenamearr = converfilename.split(", ");
 
+        //filerealname
+        let realname = "${filerealname}"
+        console.log(realname);
+        let converrealfilename = realname.slice(1,-1);
+        const filerealnamearr = converrealfilename.split(", ");
 
-        for(let i = 0; i < arr.length;i++){
-            console.log(arr[i]);
-            let test = arr[i];
+        for(let i = 0; i < filenamearr.length;i++){
+            console.log(filenamearr[i]);
+            let test = filenamearr[i];
             console.log(test);
             let node = document.createElement("a")
             let template = `
-        <a href="fileDownload.do?fileName=\${arr[i]}">\${arr[i]}
+        <a href="fileDownload.do?fileName=\${filenamearr[i]}">\${filerealnamearr[i]}
         </a>`
             node.innerHTML = template;
             attach.appendChild(node);

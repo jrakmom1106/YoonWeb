@@ -13,8 +13,8 @@
     </select>
 
     <insert id="boardWrite">
-        insert into board (bno, title, content, writer, filename)
-        values (#{bno}, #{title}, #{content}, #{writer}, #{filename})
+        insert into board (bno, title, content, writer, filename,filerealname)
+        values (#{bno}, #{title}, #{content}, #{writer}, #{filename}, #{filerealname})
     </insert>
 
     <select id="searchbno" resultType="int">

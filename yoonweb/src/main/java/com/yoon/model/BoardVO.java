@@ -16,6 +16,15 @@ public class BoardVO {
 
     //게시물 파일
     private String filename;
+    private String filerealname;
+
+    public String getFilerealname() {
+        return filerealname;
+    }
+
+    public void setFilerealname(String filerealname) {
+        this.filerealname = filerealname;
+    }
 
     public String getFilename() {
         return filename;
@@ -94,6 +103,7 @@ public class BoardVO {
                 ", viewcnt=" + viewcnt +
                 ", NUM=" + NUM +
                 ", filename='" + filename + '\'' +
+                ", filerealname='" + filerealname + '\'' +
                 '}';
     }
 }

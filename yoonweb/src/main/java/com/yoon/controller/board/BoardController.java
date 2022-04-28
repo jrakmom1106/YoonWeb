@@ -38,14 +38,12 @@ public class BoardController {
         String writer = map.get("writer");
         System.out.println("writer = " + writer);
 
-
         Integer start = viewcnt * (nowpage - 1) + 1;
         Integer last = start + viewcnt - 1;
 
         System.out.println("start + last = " + start + last);
 
         List list = boardService.boardSearch(start, last, writer, title);
-
 
         System.out.println("list = " + list);
         System.out.println(" board 조회끝= ");
@@ -57,78 +55,22 @@ public class BoardController {
     @RequestMapping("/board/register.do")
     @ResponseBody
     public String boardWrite(MultipartHttpServletRequest req) throws Exception {
-        System.out.println("게시글 등록 시작");
+        System.out.println("게시글 등록 컨트롤러 시작");
 
-        System.out.println("req = " + req);
-
-        String files = req.getParameter("files");
-        System.out.println("files = " + files);
-
-
-        String title = req.getParameter("subject");
-        System.out.println("title = " + title);
-        String content = req.getParameter("content");
-        System.out.println("content = " + content);
-        String writer = req.getParameter("writer");
-        System.out.println("writer = " + writer);
-        String date = req.getParameter("date");
-        System.out.println("date = " + date);
-
-
-        List<MultipartFile> file = req.getFiles("filename");
-        System.out.println("file =" + file);
-        String filename = "";
-
-
-        ArrayList<String> testlist = new ArrayList<String>();
-        // file 첨부여부 확인
-        if (!file.isEmpty()) {
-
-            System.out.println("file.get(0); = " + file.get(0));
-            System.out.println("file.get(1); = " + file.get(1));
-            System.out.println("tostring" + file.toString());
-
-            System.out.println("비어있지 않음");
-
-            for (int i = 0; i < file.size(); i++) {
-
-
-
-                //원래이름 저장
-                String originname = file.get(i).getOriginalFilename();
-                System.out.println("originname = " + originname);
-
-                //확장자
-                String ext = FilenameUtils.getExtension(originname);
-                System.out.println("ext = " + ext);
-                //중복방지를 위한 UUID 설정
-                UUID uuid = UUID.randomUUID();
-                //저장되는 파일이름
-                filename = uuid + "." + ext;
-
-                file.get(i).transferTo(new File("C:\\filetest\\" + filename));
-
-
-                testlist.add(filename);
-
-            }
-        }
-
-        System.out.println("testlist = " + testlist);
-        System.out.println("testlist.toString() = " + testlist.toString());
-
+        Map<String,String> result = boardService.createfileList(req);
 
         BoardVO boarddata = new BoardVO();
-
         int cnt = boardService.serchbno() + 1;
 
         boarddata.setBno(cnt);
-        boarddata.setTitle(title);
-        boarddata.setContent(content);
-        boarddata.setWriter(writer);
-        boarddata.setRegdate(date);
+        boarddata.setTitle(result.get("title"));
+        boarddata.setContent(result.get("content"));
+        boarddata.setWriter(result.get("writer"));
+        boarddata.setRegdate(result.get("date"));
         boarddata.setViewcnt(0);
-        boarddata.setFilename(testlist.toString());
+        boarddata.setFilename(result.get("filelist"));
+        boarddata.setFilerealname(result.get("filerealname"));
+
         boardService.boardWrite(boarddata);
 
         return "ok";
@@ -144,7 +86,8 @@ public class BoardController {
     @RequestMapping("/board/boardcount.do")
     @ResponseBody
     public Integer searchcount(@RequestBody Map<String, String> map) throws Exception {
-        System.out.println("검색 총 수 파악");
+        System.out.println("--검색 총 수 파악--");
+
         String writer = map.get("writer");
         System.out.println("writer = " + writer);
         String title = map.get("title");
