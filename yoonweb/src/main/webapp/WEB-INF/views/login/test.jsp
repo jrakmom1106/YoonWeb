@@ -263,7 +263,7 @@
 
         function fileDown(_filename, _userFile) {
                 console.log('test')
-            let url = "/jsp/download.jsp?file=" + _filename + "&userfile=" + encodeURI(_userFile) + "&fileType=test";
+            let url = "/jsp/download.jsp?file=" + _filename + "&userfile=" + encodeURI(_userFile) + "&fileType=test"; // filetype -> 디렉토리 추가시.
             console.log(url);
             $commons.ui.download(url)
         }

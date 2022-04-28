@@ -4,7 +4,7 @@
         <p> 작성자 : <span class="writer">${writer}</span> </p>
         <p> 내용 : <span class="boardcontent">${content}</span> </p>
         <p>작성일자 : <span class="date">${regdate}</span> </p>
-        <p class="attachfile"> 첨부파일 :</p>
+        <p class="attachfile" style="display: none"> 첨부파일 :</p>
 
         <button class="backbtn">뒤로가기</button>
         <button class="updatebtn" style="display: none">수정하기</button>
@@ -28,9 +28,23 @@
         let upbtn = document.querySelector('.updatebtn');
         let attach = document.querySelector('.attachfile');
 
+
+
+
+
+
+
         //노드생성
         let filetest = "${filename}";
-        console.log(filetest);
+
+
+        //파일없을때 숨기기.\
+        if(filetest !== ""){
+            attach.style.display = '';
+        }
+
+
+        console.log('tet ='+filetest);
         let converfilename = filetest.slice(1,-1);
         console.log(converfilename);
         const filenamearr = converfilename.split(", ");
@@ -47,7 +61,7 @@
             console.log(test);
             let node = document.createElement("a")
             let template = `
-        <a href="fileDownload.do?fileName=\${filenamearr[i]}">\${filerealnamearr[i]}
+        <a href="fileDownload.do?fileName=\${filenamearr[i]}&&filerealName=\${filerealnamearr[i]}">\${filerealnamearr[i]}
         </a>`
             node.innerHTML = template;
             attach.appendChild(node);

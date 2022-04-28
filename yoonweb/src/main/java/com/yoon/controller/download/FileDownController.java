@@ -19,8 +19,32 @@ public class FileDownController {
         //String path =  request.getSession().getServletContext().getRealPath("저장경로");
 
         String filename =request.getParameter("fileName");
+        String realname = request.getParameter("filerealName");
+        System.out.println("hhhhhh");
+        System.out.println("realname = " + realname);
+
         String realFilename="";
         System.out.println(filename);
+
+
+        if(realname!=null && !"".equals(realname)) { // 파일 다운로드시 한국어로 인코딩해서 사용자에게 보여주는 코드
+            String conVertNm = URLEncoder.encode(realname, "EUC-KR");
+            String realnameKr = new String(realname.getBytes("iso8859-1"), "EUC-KR");
+            System.out.println("### realname: " + realname + ", conVertNm: " + conVertNm);
+            //한글 포함시 URLEncoder.encode 로 인코딩
+            if (realname.matches(".*[ㄱ-ㅎ ㅏ-ㅣ가-힣]+.*") || realnameKr.matches(".*[ㄱ-ㅎ ㅏ-ㅣ가-힣]+.*")) {
+                System.out.println("###(2)#### realnameKr: " + realnameKr + ", realnameKr: " + realname);
+                if (realnameKr.matches(".*[ㄱ-ㅎ ㅏ-ㅣ가-힣]+.*")) {
+                    realname = new String(realname.getBytes("iso8859-1"), "EUC-KR");
+                }
+            } else {
+                realname = new String(realname.getBytes("iso8859-1"), "UTF-8");
+                System.out.println("#### (3) #### realname : " + realname);
+            }
+
+            realname = URLEncoder.encode(realname, "UTF-8");
+
+        }
 
         try {
             String browser = request.getHeader("User-Agent");
@@ -42,11 +66,23 @@ public class FileDownController {
             return ;
         }
 
+        Long fileLength = file1.length();
+
+        //파일명 한글시 인코딩.
+        response.setCharacterEncoding("utf-8");
+
+
+
         // 파일명 지정
 
-        response.setContentType("application/octer-stream");
+        response.setContentType("application/octer-stream;charset=utf-8");
         response.setHeader("Content-Transfer-Encoding", "binary;");
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + realname + "\"");
+
+        response.setHeader("Content-Length",""+fileLength);
+        response.setHeader("Pragma", "no-cache;");
+        response.setHeader("Expires", "-1;");
+
 
         try {
             OutputStream os = response.getOutputStream();
