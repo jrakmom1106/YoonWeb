@@ -47,6 +47,7 @@ public class MenuController {
         String writer = map.get("writer");
         String regdate = map.get("regdate");
         String bnostring = map.get("bno");
+        String filename = map.get("filename");
 
         Integer bno = Integer.parseInt(bnostring);
 
@@ -56,6 +57,7 @@ public class MenuController {
         mv.addObject("writer", writer);
         mv.addObject("regdate", regdate);
         mv.addObject("bno",bno);
+        mv.addObject("filename",filename);
 
         return mv;
 

@@ -4,7 +4,7 @@
         <p> 작성자 : <span class="writer">${writer}</span> </p>
         <p> 내용 : <span class="boardcontent">${content}</span> </p>
         <p>작성일자 : <span class="date">${regdate}</span> </p>
-
+        <p> 첨부파일 :<a href="fileDownload.do?fileName=${filename}">${filename}</a></p>
         <button class="backbtn">뒤로가기</button>
         <button class="updatebtn" style="display: none">수정하기</button>
         <button class="rmbtn" style="display: none">게시글 삭제</button>
@@ -27,6 +27,8 @@
         let upbtn = document.querySelector('.updatebtn');
 
 
+        let filetest = "${filename}";
+        console.log(filetest);
 
 
         // authcheck

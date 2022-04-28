@@ -3,6 +3,7 @@ package com.yoon.controller.board;
 import com.google.gson.Gson;
 import com.yoon.model.BoardVO;
 import com.yoon.service.BoardService;
+import org.apache.commons.io.FilenameUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 public class BoardController {
@@ -53,27 +58,52 @@ public class BoardController {
 
     @RequestMapping("/board/register.do")
     @ResponseBody
-    public String boardWrite(@RequestBody Map<String,String> map) throws Exception{
-        BoardVO vo = new BoardVO();
-        int cnt = boardService.serchbno() + 1;
-        System.out.println("cnt = " + cnt);
-        String title = map.get("title");
-        String content = map.get("title");
-        String writer = map.get("writer");
-        String regdate = map.get("regdate");
-        //String viewcnt = map.get("viewcnt");
+    public String boardWrite(MultipartHttpServletRequest req) throws Exception{
+        System.out.println("게시글 등록 시작");
+
+        String title = req.getParameter("subject");
+        System.out.println("title = " + title);
+        String content = req.getParameter("content");
+        System.out.println("content = " + content);
+        String writer = req.getParameter("writer");
+        System.out.println("writer = " + writer);
+        String date = req.getParameter("date");
+        System.out.println("date = " + date);
+
+
+        MultipartFile file = req.getFile("filename");
+        System.out.println("file =" + file);
+        String filename = "";
+
+
+        // file 첨부여부 확인
+        if(!file.isEmpty()){
+            System.out.println("비어있지 않음");
+
+        String originname = file.getOriginalFilename();
+        System.out.println("originname = " + originname);
+
+        String ext = FilenameUtils.getExtension(originname);
+        System.out.println("ext = " + ext);
+
+        UUID uuid = UUID.randomUUID();
+        filename = uuid + "."+ext;
+        file.transferTo(new File("C:\\filetest\\" + filename));
+
+        }
 
         BoardVO boarddata = new BoardVO();
+
+        int cnt = boardService.serchbno() + 1;
+
         boarddata.setBno(cnt);
         boarddata.setTitle(title);
         boarddata.setContent(content);
         boarddata.setWriter(writer);
-        boarddata.setRegdate(regdate);
+        boarddata.setRegdate(date);
         boarddata.setViewcnt(0);
+        boarddata.setFilename(filename);
         boardService.boardWrite(boarddata);
-
-
-
 
         return "ok";
     }
@@ -99,14 +129,16 @@ public class BoardController {
         return result;
     }
 
-    @RequestMapping("/board/selectboard.do")
+    @RequestMapping(value="/board/selectboard.do", produces = "application/text; charset=utf8")
     @ResponseBody
     public String selectBoard(@RequestBody Map<String, String> map) throws Exception {
+        System.out.println("상세화면 조회 시작");
+
         String data = map.get("bno");
         System.out.println("data = " + data);
         Integer bno = Integer.parseInt(data);
         List result = boardService.selectBoard(bno);
-
+        System.out.println("result = " + result);
         //json 변환
         String json = new Gson().toJson(result);
         return json;
@@ -122,7 +154,7 @@ public class BoardController {
 
     }
 
-    @RequestMapping("/board/update.do")
+    @RequestMapping("/board/update.do" )
     @ResponseBody
     public void updateBoard(@RequestBody Map<String,String> map )throws Exception{
         System.out.println("업데이트 진입");

@@ -14,6 +14,17 @@ public class BoardVO {
     //게시물 인덱스
     private int NUM;
 
+    //게시물 파일
+    private String filename;
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
     public int getNUM() {
         return NUM;
     }
@@ -82,6 +93,7 @@ public class BoardVO {
                 ", regdate='" + regdate + '\'' +
                 ", viewcnt=" + viewcnt +
                 ", NUM=" + NUM +
+                ", filename='" + filename + '\'' +
                 '}';
     }
 }

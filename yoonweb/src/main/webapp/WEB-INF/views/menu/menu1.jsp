@@ -218,7 +218,8 @@
                         "content" : data[0].content,
                         "writer" : data[0].writer,
                         "regdate" : data[0].regdate,
-                        "bno" : data[0].bno
+                        "bno" : data[0].bno,
+                        "filename" : data[0].filename
                     }
 
                     $('#content').load(url,jsondata,function(){

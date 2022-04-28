@@ -487,8 +487,13 @@ let _commons = function() {
                     if(day < 10){
                         day = "0"+day.toString();
                     }
-
-                    return year+ "-" +month+ "-"+day+ "-"+hours+ "-"+min;
+                    if(hours < 10){
+                        hours = "0"+hours.toString();
+                    }
+                    if(min < 10){
+                        min = "0"+min.toString();
+                    }
+                    return year+ "-" +month+ "-"+ day+ "-" + hours+ ":"+min;
 
                 }
             },
