@@ -13,7 +13,7 @@
     </select>
 
     <insert id="boardWrite">
-        insert into board (bno, title, content, writer, filename,filerealname)
+        insert into board (bno, title, content, writer, filename, filerealname)
         values (#{bno}, #{title}, #{content}, #{writer}, #{filename}, #{filerealname})
     </insert>
 

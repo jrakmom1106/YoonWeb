@@ -28,57 +28,53 @@
         let upbtn = document.querySelector('.updatebtn');
         let attach = document.querySelector('.attachfile');
 
-
-
-
-
-
-
-        //노드생성
-        let filetest = "${filename}";
-
+        //받아온 파일 선언 -> UUID 형식의 파일
+        let responsefilename = "${filename}";
+        console.log(responsefilename);
 
         //파일없을때 숨기기.\
-        if(filetest !== ""){
+        if(responsefilename !== "[]"){
             attach.style.display = '';
+            createFileNode();
         }
-
-
-        console.log('tet ='+filetest);
-        let converfilename = filetest.slice(1,-1);
-        console.log(converfilename);
-        const filenamearr = converfilename.split(", ");
-
-        //filerealname
-        let realname = "${filerealname}"
-        console.log(realname);
-        let converrealfilename = realname.slice(1,-1);
-        const filerealnamearr = converrealfilename.split(", ");
-
-        for(let i = 0; i < filenamearr.length;i++){
-            console.log(filenamearr[i]);
-            let test = filenamearr[i];
-            console.log(test);
-            let node = document.createElement("a")
-            let template = `
-        <a href="fileDownload.do?fileName=\${filenamearr[i]}&&filerealName=\${filerealnamearr[i]}">\${filerealnamearr[i]}
-        </a>`
-            node.innerHTML = template;
-            attach.appendChild(node);
-
-        }
-
-
-
-
-
-
 
         // authcheck
         if( writercheck === $localstorage.getValue("loginUser")){
             rmbtn.style.display = '';
             upbtn.style.display = '';
         }
+
+
+
+        function createFileNode(){
+
+            // 앞뒤  [] 제거
+            let replacefilename = responsefilename.slice(1,-1);
+            // , 공백 을 기준으로 내용 분할 -> 배열로 저장
+            const filenamearr = replacefilename.split(", ");
+
+            //사용자가 저장한 파일 이름
+            let realname = "${filerealname}"
+            // 앞뒤 [] 제거
+            let converrealfilename = realname.slice(1,-1);
+            // , 공백을 기준으로 내용 분할 -> 배열로 저장
+            const filerealnamearr = converrealfilename.split(", ");
+
+
+            for(let i = 0; i < filenamearr.length;i++){
+                console.log(filenamearr[i]);
+                let test = filenamearr[i];
+                console.log(test);
+                let node = document.createElement("a")
+                let template = `
+                <a href="fileDownload.do?fileName=\${filenamearr[i]}&&filerealName=\${filerealnamearr[i]}">\${filerealnamearr[i]}
+                </a>`
+                node.innerHTML = template;
+                attach.appendChild(node);
+
+            }
+        }
+
 
         //수정
         upbtn.onclick = function(){

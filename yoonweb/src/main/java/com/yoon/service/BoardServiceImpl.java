@@ -70,18 +70,21 @@ public class BoardServiceImpl implements BoardService{
         System.out.println("file =" + file);
         String filename = "";
 
+
+
         ArrayList<String> filenamelist = new ArrayList<String>();
         ArrayList<String> filerealnamelist = new ArrayList<String>();
         Map<String, String> result = new HashMap<String,String>();
 
         // file 첨부여부 확인
-        if (!file.isEmpty()) {
+        if (!file.get(0).getOriginalFilename().isEmpty()) {
 
             System.out.println("비어있지 않음");
 
             for (int i = 0; i < file.size(); i++) {
 
                 //원래이름 저장
+
                 String originname = file.get(i).getOriginalFilename();
                 System.out.println("originname = " + originname);
 

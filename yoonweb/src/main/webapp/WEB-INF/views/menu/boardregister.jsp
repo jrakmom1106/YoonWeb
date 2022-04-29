@@ -24,7 +24,6 @@
         }
 
         .fileuploder input[type="file"] {
-            /* 파일 필드 숨기기 */
             position: absolute;
             width: 1px;
             height: 1px;
@@ -66,9 +65,6 @@
         let onnode = document.querySelector('.lst_thumb');
         const imageTag = document.getElementById("ex_file");
 
-
-        let title = document.querySelector('#subject');
-        let content = document.querySelector('#writecontent');
         let $globalStorage = $commons.storage.g_variable;
         let writer = $globalStorage.getValue("loginUser");
         let date = $commons.util.date();
@@ -85,7 +81,7 @@
             while (onnode.hasChildNodes()) {
                 onnode.removeChild(onnode.firstChild);
             }
-            loadImg(this); // 이미지 파일을 읽어 img src 에 넣는 함수
+            loadImg(this);
 
         });
 
@@ -97,7 +93,7 @@
 
                     let reader = new FileReader();
 
-                    let fullname = document.getElementById("ex_file").files[i].name;
+                    let fullname = value.files[i].name;
                     let str = fullname.split('.');
                     let ext = str[1];
                     console.log("확장자: " + ext);
@@ -160,7 +156,6 @@
         regibtn.onclick = function () {
             let myformdata = document.getElementById('formdata');
             let formData = new FormData(myformdata);
-
             let filelist = document.getElementById("ex_file").files;
 
             let sendList = new Array();
