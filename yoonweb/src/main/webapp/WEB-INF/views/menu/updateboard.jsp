@@ -3,6 +3,7 @@
 <div id="updateboardcontent">
     <h2>제목 : <input type="text" value="${title}" class="titletext"/> </h2>
     <h2>내용 : <input type="text" value="${content}" class="contenttext"/> </h2>
+    <h2>첨부파일 : <span class="file"></span></h2>
 
 
     <button class="backbtn">뒤로가기</button>
@@ -23,6 +24,18 @@
         let titletx = document.querySelector('.titletext');
         let contenttx = document.querySelector('.contenttext');
 
+
+        console.log("here");
+        let jsonresult = ${json}[0];
+        console.log(jsonresult);
+
+        let filename = jsonresult.filename;
+        let filerealname = jsonresult.filerealname;
+
+        console.log(filename);
+        console.log(filerealname);
+
+        $('.file').text(filerealname);
 
         upbtn.onclick = function(){
 
