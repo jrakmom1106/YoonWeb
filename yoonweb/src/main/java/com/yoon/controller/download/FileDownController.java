@@ -15,7 +15,7 @@ import java.net.URLEncoder;
 public class FileDownController {
 
     @RequestMapping("fileDownload.do")
-    public void fileDownload4(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void fileDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
         //String path =  request.getSession().getServletContext().getRealPath("저장경로");
 
         String filename =request.getParameter("fileName");

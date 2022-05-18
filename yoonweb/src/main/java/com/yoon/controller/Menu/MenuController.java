@@ -80,9 +80,7 @@ public class MenuController {
     public ModelAndView Updateboard(@RequestParam Map<String, String> map) throws Exception {
         System.out.println("수정화면 진입");
 
-        String title = map.get("title");
-        String content = map.get("content");
-        String regdate = map.get("regdate");
+
         String bnostring = map.get("bno");
         Integer bno = Integer.parseInt(bnostring);
 
@@ -98,9 +96,7 @@ public class MenuController {
 
 
         ModelAndView mv = new ModelAndView("menu/updateboard");
-        mv.addObject("title", title);
-        mv.addObject("content", content);
-        mv.addObject("regdate", regdate);
+
         mv.addObject("bno",bno);
         mv.addObject("json" , json);
 

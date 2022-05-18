@@ -43,8 +43,8 @@ public class BoardServiceImpl implements BoardService{
                     String ext = FilenameUtils.getExtension(origin);
                     String savename = uuid +"." + ext;
 
+                    list.get(i).transferTo(new File(savepath,savename));
 
-                    File file = new File(savepath,savename);
                     param.put("file_name",savename);
                     param.put("real_name",origin);
                     boardmapper.insertfile(param);
@@ -147,7 +147,9 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public Map<String, Object> boardDetail(Map<String, Object> param) {
         Map<String, Object> result = boardmapper.boardDetail(param);
-
+        System.out.println("result = " + result);
+        result.put("file",boardmapper.boardDetailfile(param));
+        System.out.println("result2 = " + result);
         return result;
     }
 }

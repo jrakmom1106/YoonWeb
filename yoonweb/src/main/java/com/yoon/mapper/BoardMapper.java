@@ -18,4 +18,6 @@ public interface BoardMapper {
 
     Map<String, Object> boardDetail(Map<String, Object> param);
     void insertfile(Map <String, Object>param);
+
+    List boardDetailfile(Map<String, Object> param);
 }

@@ -7,7 +7,7 @@
     <select id="boardSearch" resultType="com.yoon.model.BoardVO">
         select bno, title, writer, regdate, viewcnt, NUM
         from (select ROWNUM AS NUM, e.*
-              from (select * from board where writer like '%'||#{writer}||'%' and title like '%'||#{title}||'%' order by REGDATE desc) e)
+              from (select * from board where writer like '%'||#{writer}||'%' and title like '%'||#{title}||'%' order by BNO DESC) e)
         where NUM between #{start} and #{last}
 
     </select>
@@ -61,11 +61,10 @@
     </update>
 
     <select id="boardDetail" resultType="Hashmap">
-        select bno,
-               title,
+        select title,
                content,
-               filename,
-               FILEREALNAME
+               writer,
+               regdate
         from BOARD
         WHERE bno = #{bno}
     </select>
@@ -81,4 +80,12 @@
                  #{real_name}
                         )
     </insert>
+
+    <select id="boardDetailfile" resultType="Hashmap">
+        SELECT f.filename,
+               f.realname
+        FROM board_file f
+            LEFT JOIN board b ON b.bno = f.bnum
+        WHERE f.bnum = #{bno}
+    </select>
 </mapper>
