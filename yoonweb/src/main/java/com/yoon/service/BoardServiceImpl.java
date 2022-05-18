@@ -25,8 +25,33 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public void boardWrite(BoardVO boardVO) throws Exception {
-        boardmapper.boardWrite(boardVO);
+    public void boardWrite(Map<String, Object> param) throws Exception {
+        boardmapper.boardWrite(param);
+
+        if(param.containsKey("filelist")){
+            List<MultipartFile> list = (List<MultipartFile>) param.get("filelist");
+
+            System.out.println("list = " + list);
+
+            String savepath = "C:\\filetest\\";
+
+                for(int i =0 ; i < list.size(); i++){
+                    MultipartFile mf = list.get(i);
+                    UUID uuid = UUID.randomUUID();
+                    String origin = mf.getOriginalFilename();
+                    //확장자
+                    String ext = FilenameUtils.getExtension(origin);
+                    String savename = uuid +"." + ext;
+
+
+                    File file = new File(savepath,savename);
+                    param.put("file_name",savename);
+                    param.put("real_name",origin);
+                    boardmapper.insertfile(param);
+                }
+
+
+        }
     }
 
     @Override
@@ -115,6 +140,13 @@ public class BoardServiceImpl implements BoardService{
         result.put("filelist",filenamelist.toString());
         result.put("filerealname",filerealnamelist.toString());
 
+
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> boardDetail(Map<String, Object> param) {
+        Map<String, Object> result = boardmapper.boardDetail(param);
 
         return result;
     }

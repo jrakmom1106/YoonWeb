@@ -10,13 +10,13 @@ import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.ModelMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.*;
 
@@ -54,26 +54,33 @@ public class BoardController {
 
     @RequestMapping("/board/register.do")
     @ResponseBody
-    public String boardWrite(MultipartHttpServletRequest req) throws Exception {
+    public Map<String, Object> boardWrite(@RequestParam Map<String,Object> param, MultipartHttpServletRequest request) throws Exception {
         System.out.println("게시글 등록 컨트롤러 시작");
+        System.out.println("param = " + param);
 
-        Map<String,String> result = boardService.createfileList(req);
 
-        BoardVO boarddata = new BoardVO();
-        int cnt = boardService.serchbno() + 1;
+        MultiValueMap<String,MultipartFile> mvm = request.getMultiFileMap();
+        System.out.println("mvm = " + mvm);
+        if(mvm.containsKey("filename")){
+            System.out.println("inin");
+            List<MultipartFile> list = mvm.get("filename");
+            param.put("filelist", list);
+            for (int i = 0 ; i < list.size() ; i ++){
+                MultipartFile mf = list.get(i);
+                System.out.println("mf = " + mf);
+            }
+        }
 
-        boarddata.setBno(cnt);
-        boarddata.setTitle(result.get("title"));
-        boarddata.setContent(result.get("content"));
-        boarddata.setWriter(result.get("writer"));
-        boarddata.setRegdate(result.get("date"));
-        boarddata.setViewcnt(0);
-        boarddata.setFilename(result.get("filelist"));
-        boarddata.setFilerealname(result.get("filerealname"));
+        boardService.boardWrite(param);
+//        Map<String,Object> result = boardService.createfileList(param);
+//
+//        BoardVO boarddata = new BoardVO();
+//        int cnt = boardService.serchbno() + 1;
 
-        boardService.boardWrite(boarddata);
+        ModelMap map = new ModelMap();
 
-        return "ok";
+
+        return map;
     }
 
     @RequestMapping("getbno.do")
@@ -140,5 +147,20 @@ public class BoardController {
         boardService.boardUpdate(title, content, bno);
 
 
+    }
+
+
+
+
+    @RequestMapping("/board/boardDetail.do")
+    @ResponseBody
+    public Map<String, Object> boardDetail(@RequestParam Map<String, Object> param, HttpServletRequest request) throws Exception{
+        System.out.println("papapap");
+        System.out.println("param = " + param);
+        Map<String, Object> map = boardService.boardDetail(param);
+        ModelMap model = new ModelMap();
+        model.put("dataList", map);
+
+        return model;
     }
 }

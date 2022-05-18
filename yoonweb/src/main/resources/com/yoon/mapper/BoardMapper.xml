@@ -12,9 +12,25 @@
 
     </select>
 
-    <insert id="boardWrite">
-        insert into board (bno, title, content, writer, filename, filerealname)
-        values (#{bno}, #{title}, #{content}, #{writer}, #{filename}, #{filerealname})
+    <insert id="boardWrite" parameterType="java.util.HashMap">
+    <selectKey resultType="int" keyProperty="bno" order="BEFORE">
+        SELECT MAX(bno) + 1 FROM board
+    </selectKey>
+        insert into board
+            (
+             bno,
+             title,
+             content,
+             writer,
+             regdate
+             )
+        values (
+                BNO.NEXTVAL,
+                #{title},
+                #{content},
+                #{writer},
+                SYSDATE
+                )
     </insert>
 
     <select id="searchbno" resultType="int">
@@ -43,4 +59,26 @@
     <update id="boardUpdate">
         update board set title = #{title} , content = #{content} where bno = #{bno}
     </update>
+
+    <select id="boardDetail" resultType="Hashmap">
+        select bno,
+               title,
+               content,
+               filename,
+               FILEREALNAME
+        from BOARD
+        WHERE bno = #{bno}
+    </select>
+
+    <insert id="insertfile">
+        INSERT INTO board_file(
+               bnum,
+               filename,
+               realname
+        )values (
+                 #{bno},
+                 #{file_name},
+                 #{real_name}
+                        )
+    </insert>
 </mapper>

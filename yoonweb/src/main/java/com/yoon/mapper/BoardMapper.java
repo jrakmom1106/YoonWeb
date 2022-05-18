@@ -9,10 +9,13 @@ import java.util.Map;
 @Mapper
 public interface BoardMapper {
     List<BoardVO> boardSearch(Integer start, Integer last, String writer,String title);
-    void boardWrite(BoardVO boardVO);
+    void boardWrite(Map<String, Object> param);
     int searchbno();
     int searchcnt(String writer, String title);
     List<BoardVO> selectBoard(Integer bno);
     void boardRemove(Integer bno);
     void boardUpdate(String title, String content,Integer bno);
+
+    Map<String, Object> boardDetail(Map<String, Object> param);
+    void insertfile(Map <String, Object>param);
 }

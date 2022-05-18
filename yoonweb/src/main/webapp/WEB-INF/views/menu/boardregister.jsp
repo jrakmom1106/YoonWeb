@@ -37,9 +37,9 @@
 </head>
 <div id="contentwrap2">
 
-    <form id="formdata">
-        <h3> 제목 : <input type="text" placeholder="제목" id="subject" name="subject"></h3>
-        <h3> 내용 : <input type="text" placeholder="내용" id="writecontent" name="content"></h3>
+    <form id="formdata" method="post" enctype="multipart/form-data">
+        <h3> 제목 : <input type="text" placeholder="제목" id="title" name="title"></h3>
+        <h3> 내용 : <input type="text" placeholder="내용" id="content" name="content"></h3>
         <h3 class="fileuploder"> 파일첨부 :
             <label for="ex_file">파일 등록</label>
             <input type="file" id="ex_file" name="filename" multiple>
@@ -158,23 +158,22 @@
             let formData = new FormData(myformdata);
             let filelist = document.getElementById("ex_file").files;
 
-            let sendList = new Array();
+            // let sendList = new Array();
+            //
+            // for (let i = 0; i < filelist.length; i++) {
+            //     let fullname = filelist[i].name
+            //     let str = fullname.split('.');
+            //     let ext = str[1];
+            //
+            //     let data = new Object();
+            //     data.filename = fullname;
+            //     data.ext = ext;
+            //     sendList.push(data);
+            // }
+            // let jsonData = JSON.stringify(sendList);
 
-            for (let i = 0; i < filelist.length; i++) {
-                let fullname = filelist[i].name
-                let str = fullname.split('.');
-                let ext = str[1];
-
-                let data = new Object();
-                data.filename = fullname;
-                data.ext = ext;
-                sendList.push(data);
-            }
-            let jsonData = JSON.stringify(sendList);
-
-            formData.append("files", jsonData);
+            formData.append("files", filelist);
             formData.append("writer", writer);
-            formData.append("date", date)
 
             fetch("/board/register.do", {
                 method: 'POST',
