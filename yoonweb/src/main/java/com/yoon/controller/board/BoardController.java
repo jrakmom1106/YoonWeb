@@ -7,6 +7,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,8 @@ public class BoardController {
 
     @Autowired
     private BoardService boardService;
+
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(value = "/board/search.do", produces = "application/text; charset=utf8")
     @ResponseBody
@@ -55,11 +59,11 @@ public class BoardController {
     @RequestMapping("/board/register.do")
     @ResponseBody
     public Map<String, Object> boardWrite(@RequestParam Map<String,Object> param, MultipartHttpServletRequest request) throws Exception {
-        System.out.println("게시글 등록 컨트롤러 시작");
-        System.out.println("param = " + param);
+        logger.debug("게시글 등록 controller 시작");
+        logger.debug(param.toString());
 
 
-        MultiValueMap<String,MultipartFile> mvm = request.getMultiFileMap();
+        /*MultiValueMap<String,MultipartFile> mvm = request.getMultiFileMap();
         System.out.println("mvm = " + mvm);
         if(mvm.containsKey("filename")){
             System.out.println("inin");
@@ -69,7 +73,7 @@ public class BoardController {
                 MultipartFile mf = list.get(i);
                 System.out.println("mf = " + mf);
             }
-        }
+        }*/
 
         boardService.boardWrite(param);
 //        Map<String,Object> result = boardService.createfileList(param);

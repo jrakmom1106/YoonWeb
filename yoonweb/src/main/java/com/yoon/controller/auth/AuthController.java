@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -85,6 +86,25 @@ public class AuthController {
         }else{
             return false;
         }
+
+    }
+
+    //자동완성 기능
+    @RequestMapping("member/memberAutoComplete.do")
+    @ResponseBody
+    public List memberAutoComplete(@RequestBody Map<String,String> mapData) throws Exception{
+
+        System.out.println("autoComplete 실행");
+        System.out.println(mapData);
+        System.out.println(mapData.get("VALUE"));
+        ModelAndView mav = new ModelAndView();
+
+        List resultList = memberservice.memberAutoComplete(mapData);
+
+
+        mav.addObject("output",resultList);
+
+        return resultList;
 
     }
 }

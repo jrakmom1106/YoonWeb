@@ -59,33 +59,8 @@
 
 <script>
 
-    let service= {
 
-        loadingData : function(){
-            let form = new FormData(document.getElementById('form'));
-            console.log("form");
-            console.log(form);
-            jQuery.ajax({
-                url : "/board/boardDetail.do",
-                data : form,
-                type: "POST",
-                dataType: "json",
-                processData : false,
-                contentType : false,
-                success: function(data){
-                    console.log("ajax here");
-                    console.log(data);
-                },
-                error: function(err){
-                console.log(err);
-            }
-            });
-        }
-
-    }
     $(document).ready(function(){
-
-        service.loadingData();
 
 
         let upbtn = document.querySelector('.updatebtn');
@@ -97,18 +72,26 @@
         let contenttx = document.querySelector('.contenttext');
 
 
-        console.log("here");
-        let jsonresult = ${json}[0];
-        console.log(jsonresult);
+        let form = new FormData(document.getElementById('form'));
+        console.log("form");
+        console.log(form);
+        jQuery.ajax({
+            url: "/board/boardDetail.do",
+            data: form,
+            type: "POST",
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                console.log("ajax here");
+                console.log(data);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
 
-        let filename = jsonresult.filename;
-        let filerealname = jsonresult.filerealname;
 
-        console.log(filename);
-        console.log(filerealname);
-
-
-        $('.file').text(filerealname);
 
         upbtn.onclick = function(){
 

@@ -19,4 +19,13 @@
         select * from book_member where memberId = #{memberId} AND memberPw =#{memberPw}
     </select>
 
+
+    <select id="memberAutoComplete" resultType="java.util.HashMap">
+        select
+               *
+        from book_member
+        where USER_NAME LIKE '%'||#{VALUE}||'%'
+
+    </select>
+
 </mapper>

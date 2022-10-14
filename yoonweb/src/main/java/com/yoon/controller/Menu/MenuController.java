@@ -80,25 +80,12 @@ public class MenuController {
     public ModelAndView Updateboard(@RequestParam Map<String, String> map) throws Exception {
         System.out.println("수정화면 진입");
 
-
         String bnostring = map.get("bno");
         Integer bno = Integer.parseInt(bnostring);
 
-        List result = boardService.selectBoard(bno);
-
-        System.out.println("resulthere = " + result);
-
-        String resultst = result.get(0).toString();
-        System.out.println("resultst = " + resultst);
-
-        String json = new Gson().toJson(result);
-        System.out.println("json = " + json);
-
 
         ModelAndView mv = new ModelAndView("menu/updateboard");
-
         mv.addObject("bno",bno);
-        mv.addObject("json" , json);
 
         return mv;
     }

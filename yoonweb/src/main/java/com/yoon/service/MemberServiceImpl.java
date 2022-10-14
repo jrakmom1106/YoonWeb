@@ -34,5 +34,10 @@ import java.util.Map;
         return membermapper.idCheck(memberId);
     }
 
+    @Override
+    public List memberAutoComplete(Map<String,String> mapData) throws Exception {
+        return membermapper.memberAutoComplete(mapData);
+    }
+
     }
 
