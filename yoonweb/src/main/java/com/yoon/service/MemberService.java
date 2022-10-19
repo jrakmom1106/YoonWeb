@@ -12,7 +12,7 @@ public interface MemberService {
     public int idCheck(String memberId) throws Exception;
 
     public List memberAutoComplete(Map<String,String> mapData) throws SQLException, Exception;
-    public List ArrayListSample(List<Map<String,String>> mapList) throws SQLException, Exception;
+    public int ArrayListSample(List<Map<String,String>> mapList) throws SQLException, Exception;
 
     public int checkMemeber(Map<String,String> mapData) throws SQLException, Exception;
 

@@ -41,7 +41,7 @@ import java.util.Map;
 
 
     @Override
-    public List ArrayListSample(List<Map<String,String>> mapList) throws Exception {
+    public int ArrayListSample(List<Map<String,String>> mapList) throws Exception {
         return membermapper.ArrayListSample(mapList);
     }
 

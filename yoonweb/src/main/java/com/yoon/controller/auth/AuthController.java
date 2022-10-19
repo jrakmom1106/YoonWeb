@@ -111,7 +111,7 @@ public class AuthController {
     //list value sample
     @RequestMapping("member/ArrayListSample.do")
     @ResponseBody
-    public List ArrayListSample(@RequestBody List<Map<String,String>> mapList) throws Exception{
+    public int ArrayListSample(@RequestBody List<Map<String,String>> mapList) throws Exception{
 
         System.out.println("ArrayListSample 실행");
         System.out.println(mapList);
@@ -124,7 +124,7 @@ public class AuthController {
 
         ModelAndView mav = new ModelAndView();
 
-        List resultList = memberservice.ArrayListSample(mapList);
+        int resultList = memberservice.ArrayListSample(mapList);
 
 
         mav.addObject("output",resultList);

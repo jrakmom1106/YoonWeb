@@ -165,7 +165,7 @@
                     }
                 });
 
-                debugger;
+
 
                 if(sendReuslt === 0 ) {
                     auth_check_yn[i].value = 'N';

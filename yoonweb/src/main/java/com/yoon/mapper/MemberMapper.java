@@ -13,7 +13,7 @@ public interface MemberMapper {
     Map<String, String>memberFind(Map<String, String> map);
     public int idCheck(String memberId);
     public List memberAutoComplete(Map<String,String> mapData);
-    public List ArrayListSample(List<Map<String,String>> mapList);
+    public int ArrayListSample(List<Map<String,String>> mapList);
 
     public int checkMemeber(Map<String,String> mapData);
 

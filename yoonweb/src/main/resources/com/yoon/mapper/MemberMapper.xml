@@ -28,7 +28,7 @@
 
     </select>
 
-    <select id="ArrayListSample" resultType="java.util.HashMap">
+    <update id="ArrayListSample">
 
         BEGIN
         <foreach collection="list" item="target" separator=";">
@@ -41,7 +41,7 @@
         ;
         END;
 
-    </select>
+    </update>
 
     <select id="checkMemeber" resultType="int">
 
