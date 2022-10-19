@@ -28,13 +28,19 @@
             <tr>
                 <th><input id="autoCompleteInput" class="input_id"/></th>
                 <th><input id="user_pw" class="input_pw"/></th>
-                <th><button class="auth_check_btn">중복확인</button></th>
+                <th>
+                    <button class="auth_check_btn">존재여부</button>
+                    <input type="hidden" class="auth_check_yn" value="N"/>
+                </th>
                 <th><input id="user_id" class="input_name"/></th>
             </tr>
             <tr>
                 <th><input  class="input_id"/></th>
                 <th><input  class="input_pw"/></th>
-                <th><button class="auth_check_btn">중복확인</button></th>
+                <th>
+                    <button class="auth_check_btn">존재여부</button>
+                    <input type="hidden" class="auth_check_yn" value="N"/>
+                </th>
                 <th><input  class="input_name"/></th>
             </tr>
             </tbody>
@@ -42,6 +48,7 @@
         </table>
         <br>
         <button id="check_btn">테스트</button>
+        <button id="reset_btn">초기화</button>
 
         <%--<form id="frm">
             <input type="text" placeholder="제목" id="subject" name="subject">
@@ -66,7 +73,9 @@
 
         let auto_input =  container.querySelector("#autoCompleteInput");
         let user_pw = container.querySelector("#user_pw");
+
         let check_btn = container.querySelector("#check_btn");
+        let reset_btn = container.querySelector("#reset_btn");
 
 
         let input_name = container.querySelectorAll(".input_name");
@@ -74,13 +83,14 @@
         let input_id = container.querySelectorAll(".input_id");
 
         let check_user_btn = container.querySelectorAll(".auth_check_btn");
+        let auth_check_yn = container.querySelectorAll(".auth_check_yn");
 
 
 
         $("#autoCompleteInput",container).autocomplete({
             source: function(request,response){
                 $.ajax({
-                    url: 'member/memberAutomplete.do',
+                    url: 'member/memberAutoComplete.do',
                     type : "POST",
                     contentType : "application/json",
                     data : JSON.stringify({VALUE : request.term}),
@@ -128,10 +138,43 @@
         //중복확인 check event
         for(let i = 0 ; i < check_user_btn.length ; i++){
 
-            $(check_user_btn[i]).on('click',function(){
+            $(check_user_btn[i]).on('click',async function(){
                 console.log(this);
 
+                if(!(input_id[i].value) || !(input_pw[i].value)){
+                    alert('아이디와 비밀번호를 입력해 주세요');
+                    return;
+                }
 
+
+                let data = {
+                    user_id : input_id[i].value,
+                    user_pw : input_pw[i].value
+                }
+
+                let sendReuslt = await $.ajax({
+                    url: 'member/checkMemeber.do',
+                    type : "POST",
+                    contentType : "application/json",
+                    data : JSON.stringify(data),
+                    success : function (responseData){
+
+                    },
+                    error: function(){
+
+                    }
+                });
+
+                debugger;
+
+                if(sendReuslt === 0 ) {
+                    auth_check_yn[i].value = 'N';
+                    alert('존재하지 않는 회원입니다. 아이디와 비밀번호를 확인해주세요')
+                    return;
+                }
+
+                alert('존재하는 아이디 입니다.');
+                auth_check_yn[i].value = 'Y';
 
 
             })
@@ -140,7 +183,26 @@
 
         check_btn.onclick = async function(){
 
-            console.log()
+
+            for(let idx in auth_check_yn){
+
+                if(auth_check_yn[idx].value == 'N'){
+                    let cnt = Number(idx) + 1;
+                    alert(cnt+" 번 라인 아이디 존재여부 확인을 먼저 해주세요");
+                    return;
+                }
+            }
+
+
+
+            for(let idx in input_name){
+                if(input_name[idx].value == ''){
+                    let cnt = Number(idx) + 1;
+                    alert(cnt+" 번째 변경할 이름을 넣어주세요. 빈값은 넣을 수 없습니다.");
+                    return;
+                }
+            }
+
 
             let sendArray = [];
             for(let i = 0 ; i < input_id.length ; i++){
@@ -163,6 +225,9 @@
                 contentType : "application/json",
                 data : JSON.stringify(sendArray),
                 success : function (responseData){
+                    clearInputBox();
+                    alert('회원정보 수정이 완료되었습니다.');
+
 
                 },
                 error: function(){
@@ -170,10 +235,29 @@
                 }
             });
 
-            console.log(sendReuslt)
+
 
 
         }
+
+        reset_btn.onclick = function(){
+            clearInputBox();
+        }
+
+
+
+        function clearInputBox(){
+
+            for(let i = 0; i < input_name.length; i++){
+                input_name[i].value = '';
+                input_pw[i].value = '';
+                input_id[i].value = '';
+                auth_check_yn[i].value = 'N';
+
+            }
+
+        }
+
 
 
 

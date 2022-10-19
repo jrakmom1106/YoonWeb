@@ -15,4 +15,6 @@ public interface MemberMapper {
     public List memberAutoComplete(Map<String,String> mapData);
     public List ArrayListSample(List<Map<String,String>> mapList);
 
+    public int checkMemeber(Map<String,String> mapData);
+
 }

@@ -45,5 +45,12 @@ import java.util.Map;
         return membermapper.ArrayListSample(mapList);
     }
 
+
+    @Override
+    public int checkMemeber(Map<String,String> mapData)throws Exception {
+        return membermapper.checkMemeber(mapData);
+    }
+
+
     }
 

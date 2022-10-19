@@ -133,4 +133,23 @@ public class AuthController {
 
     }
 
+    //list value sample
+    @RequestMapping("member/checkMemeber.do")
+    @ResponseBody
+    public int checkMemeber(@RequestBody Map<String,String> mapData) throws Exception{
+
+        System.out.println("checkMemeber 실행");
+        System.out.println(mapData);
+
+        ModelAndView mav = new ModelAndView();
+
+        int resultCnt = memberservice.checkMemeber(mapData);
+
+
+        mav.addObject("output",resultCnt);
+
+        return resultCnt;
+
+    }
+
 }

@@ -14,4 +14,6 @@ public interface MemberService {
     public List memberAutoComplete(Map<String,String> mapData) throws SQLException, Exception;
     public List ArrayListSample(List<Map<String,String>> mapList) throws SQLException, Exception;
 
+    public int checkMemeber(Map<String,String> mapData) throws SQLException, Exception;
+
 }

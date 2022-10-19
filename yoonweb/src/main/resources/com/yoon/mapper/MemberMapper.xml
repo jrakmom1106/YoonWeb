@@ -43,4 +43,14 @@
 
     </select>
 
+    <select id="checkMemeber" resultType="int">
+
+        SELECT
+            count(*)
+        FROM BOOK_MEMBER
+        WHERE MEMBERID = #{user_id} and MEMBERPW = #{user_pw}
+
+    </select>
+
+
 </mapper>
