@@ -39,5 +39,11 @@ import java.util.Map;
         return membermapper.memberAutoComplete(mapData);
     }
 
+
+    @Override
+    public List ArrayListSample(List<Map<String,String>> mapList) throws Exception {
+        return membermapper.ArrayListSample(mapList);
+    }
+
     }
 

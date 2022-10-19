@@ -14,7 +14,34 @@
 <div id="content" class="menu2_tab">
     <div id="contentwrap">
 
-        <input id="autoCompleteInput"/>
+
+        <table border="1" class="board">
+            <thead>
+            <tr>
+                <th>회원 아이디</th>
+                <th>회원 비밀번호</th>
+                <th>중복확인</th>
+                <th>바꾸실 이름</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th><input id="autoCompleteInput" class="input_id"/></th>
+                <th><input id="user_pw" class="input_pw"/></th>
+                <th><button class="auth_check_btn">중복확인</button></th>
+                <th><input id="user_id" class="input_name"/></th>
+            </tr>
+            <tr>
+                <th><input  class="input_id"/></th>
+                <th><input  class="input_pw"/></th>
+                <th><button class="auth_check_btn">중복확인</button></th>
+                <th><input  class="input_name"/></th>
+            </tr>
+            </tbody>
+            <!-- forEach 문은 리스트 객체 타입을 꺼낼때 많이 활용된다. -->
+        </table>
+        <br>
+        <button id="check_btn">테스트</button>
 
         <%--<form id="frm">
             <input type="text" placeholder="제목" id="subject" name="subject">
@@ -33,18 +60,27 @@
 <script src='/js/jquery-ui.js?ver=1'></script>
 <script type="text/javascript">
 
-    let initailize = function(){
+    $(document).ready(function () {
 
         let container = document.querySelector(".menu2_tab");
 
         let auto_input =  container.querySelector("#autoCompleteInput");
+        let user_pw = container.querySelector("#user_pw");
+        let check_btn = container.querySelector("#check_btn");
+
+
+        let input_name = container.querySelectorAll(".input_name");
+        let input_pw = container.querySelectorAll(".input_pw");
+        let input_id = container.querySelectorAll(".input_id");
+
+        let check_user_btn = container.querySelectorAll(".auth_check_btn");
 
 
 
         $("#autoCompleteInput",container).autocomplete({
             source: function(request,response){
                 $.ajax({
-                    url: 'member/memberAutoComplete.do',
+                    url: 'member/memberAutomplete.do',
                     type : "POST",
                     contentType : "application/json",
                     data : JSON.stringify({VALUE : request.term}),
@@ -52,8 +88,8 @@
                         response(
                             $.map(responseData , function(item){
                                 return{
-                                    value : item.USER_NAME,
-                                    label : item.USER_NAME
+                                    value : item.MEMBERID,
+                                    label : item.MEMBERID
                                 }
                             })
                         )
@@ -85,17 +121,68 @@
                 // 선택시 이벤트 부여 가능
             }
 
-        })
+        });
 
 
-    }
+
+        //중복확인 check event
+        for(let i = 0 ; i < check_user_btn.length ; i++){
+
+            $(check_user_btn[i]).on('click',function(){
+                console.log(this);
 
 
-    $(document).ready( function () {
-        // start
-        initailize();
+
+
+            })
+        }
+
+
+        check_btn.onclick = async function(){
+
+            console.log()
+
+            let sendArray = [];
+            for(let i = 0 ; i < input_id.length ; i++){
+
+                let data = {
+                    user_id : input_id[i].value,
+                    user_pw : input_pw[i].value,
+                    user_name :input_name[i].value
+                }
+
+                sendArray.push(data);
+
+            }
+
+
+
+            let sendReuslt = await $.ajax({
+                url: 'member/ArrayListSample.do',
+                type : "POST",
+                contentType : "application/json",
+                data : JSON.stringify(sendArray),
+                success : function (responseData){
+
+                },
+                error: function(){
+
+                }
+            });
+
+            console.log(sendReuslt)
+
+
+        }
+
+
+
+
 
     });
+
+
+
 
     /*function fn_boardRegi(){
         let title = $("#subject").val();

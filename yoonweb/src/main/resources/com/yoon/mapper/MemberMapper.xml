@@ -24,7 +24,22 @@
         select
                *
         from book_member
-        where USER_NAME LIKE '%'||#{VALUE}||'%'
+        where MEMBERID LIKE '%'||#{VALUE}||'%'
+
+    </select>
+
+    <select id="ArrayListSample" resultType="java.util.HashMap">
+
+        BEGIN
+        <foreach collection="list" item="target" separator=";">
+            update
+            book_member
+            set USER_NAME = #{target.user_name}
+            where  MEMBERID = #{target.user_id}
+            AND MEMBERPW = #{target.user_pw}
+        </foreach>
+        ;
+        END;
 
     </select>
 
