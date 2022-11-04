@@ -8,6 +8,22 @@
     .ui-helper-hidden-accessible{
         display:none;
     }
+    .check_box_delete_btn{
+        height: 36px;
+        width: 43px;
+        margin-top: 14px;
+    }
+    .checkbox_text{
+        margin-right: 10px;
+    }
+    .checkbox_input{
+        margin-right: 10px;
+    }
+    .check_box_unit{
+        display: flex;
+    }
+
+
 </style>
 </head>
 <body>
@@ -50,6 +66,23 @@
         <button id="check_btn">테스트</button>
         <button id="reset_btn">초기화</button>
 
+        <br>
+        <br>
+
+        <div class="checkbox_text_div">
+
+            <div class="check_box_unit">
+                <input type="checkbox" class="checkbox_input"/>
+                <h3 class="checkbox_text">test</h3>
+                <button type="button" class="check_box_delete_btn">삭제</button>
+            </div>
+
+        </div>
+
+        <button type="button" class="check_box_create_btn">추가</button>
+        <br>
+        <br>
+        <button type="button" class="ui-button" id="_modal_popup_btn">모달 팝업 생성 버튼</button>
         <%--<form id="frm">
             <input type="text" placeholder="제목" id="subject" name="subject">
             <input type="text" placeholder="내용" id="writecontent" name="content">
@@ -65,6 +98,8 @@
       href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src='/js/jquery-3.6.0.min.js?ver=1'></script>
 <script src='/js/jquery-ui.js?ver=1'></script>
+
+
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -84,6 +119,8 @@
 
         let check_user_btn = container.querySelectorAll(".auth_check_btn");
         let auth_check_yn = container.querySelectorAll(".auth_check_yn");
+
+        let modal_popup_btn = container.querySelector("#_modal_popup_btn");
 
 
 
@@ -258,6 +295,21 @@
 
         }
 
+
+
+
+        modal_popup_btn.onclick = async function(){
+            let confirm = await $commons.ui.dialogs.confirm('test');
+
+
+
+            if(confirm) {
+                alert('사용자가 확인 버튼을 눌렀습니다.');
+            }else{
+                alert('사용자가 취소 버튼을 눌렀습니다.');
+            }
+
+        }
 
 
 

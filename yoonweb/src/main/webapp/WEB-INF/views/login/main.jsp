@@ -266,6 +266,7 @@
 <script src='/js/jquery-3.6.0.min.js?ver=1'></script>
 <script src='/assets/lib/yoon/common.js'></script>
 <script src='/assets/lib/yoon/createtab.js'></script>
+<link type="text/css" rel="stylesheet" href="/assets/css/modal.css">
 
 <script>
 

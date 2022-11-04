@@ -465,6 +465,96 @@ let _commons = function() {
                         }
                         element.dispatchEvent(new Event(eventId));
                     }
+                },
+                dialogs:{
+                    confirm: function(message,checkedCallback,canceledCallback,options){
+                        let CONFIRM_TEMPLATE =`
+                        <div class="modal-overlay" data-layer="layer-confirm">
+                            <div class="modal-window">
+                               
+                                    <div class="title">
+                                        <h2>모달</h2>
+                                    </div>
+                                    <div class="close-area">X</div>
+                                    <div class="content">
+                                        <div class="ui-layer__body_inner">${message.replace(/(?:\r\n|\r|\n)/g,'<br>')}</div>
+                                    </div>
+                                    <div class="modal_footer">
+                                        <div class="modal_right_section">
+                                            <ul class="modal_btn_list">
+                                                <li class="modal_btn_item">
+                                                    <button type="button" class="modal_btn_cancel layer-cancel">
+                                                    ${options && options.cancelText ? options.cancelText : '취소'}
+                                                    </button>
+                                                </li>
+                                                <li class="modal_btn_item">
+                                                    <button type="button" class="modal_btn_cancel layer-checked">
+                                                    ${options && options.checkedText ? options.checkedText : '확인'}
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                   
+                            </div>     
+                        </div>`
+
+                        let confirmElement = _Self.ui.element.create(CONFIRM_TEMPLATE,true);
+
+                        confirmElement.onkeyup = function(e){
+                            if(e.key ==='Enter' || e.key ===' '){
+                                confirmElement.querySelector('button.layer-checked').click();
+                            }else if(e.key === 'Escape'){
+                                confirmElement.querySelector('button.layer-cancel').click();
+                            }
+                        }
+
+                        document.body.appendChild(confirmElement);
+
+                        function _checked(resolve){
+                            /*uiJSLayer.close('layer-confirm');*/
+                            document.body.removeChild(confirmElement);
+                            if(checkedCallback){
+                                checkedCallback(true)
+                            }
+                            resolve(true);
+                        }
+
+
+                        function _canceled(resolve){
+                            /*uiJSLayer.close('layer-confirm');*/
+                            document.body.removeChild(confirmElement);
+                            if(canceledCallback){
+                                canceledCallback(false);
+                            }
+                            resolve(false);
+                        }
+
+
+                        return new Promise(function (resolve,reject){
+
+                            // uiJSLayer.open('layer-confirm');
+
+                            confirmElement.querySelector('button.layer-cancel').onclick = function(){
+                                _canceled(resolve);
+                            };
+
+                            confirmElement.querySelector('button.layer-checked').onclick = function(){
+                                _checked(resolve);
+                            };
+
+                            /*$('[data-layer=layer-confirm]').on('layerAfterClosed',function(){
+                                document.body.removeChild(confirmElement);
+                            });*/
+
+                            $('.close-area').on('click',function(){
+                                _canceled(resolve);
+                            })
+
+                        });
+
+
+                    }
                 }
 
             },
