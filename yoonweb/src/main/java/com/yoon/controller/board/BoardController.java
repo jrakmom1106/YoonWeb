@@ -63,17 +63,19 @@ public class BoardController {
         logger.debug(param.toString());
 
 
-        /*MultiValueMap<String,MultipartFile> mvm = request.getMultiFileMap();
+        MultiValueMap<String,MultipartFile> mvm = request.getMultiFileMap();
         System.out.println("mvm = " + mvm);
         if(mvm.containsKey("filename")){
             System.out.println("inin");
             List<MultipartFile> list = mvm.get("filename");
             param.put("filelist", list);
+
             for (int i = 0 ; i < list.size() ; i ++){
                 MultipartFile mf = list.get(i);
                 System.out.println("mf = " + mf);
             }
-        }*/
+
+        }
 
         boardService.boardWrite(param);
 //        Map<String,Object> result = boardService.createfileList(param);

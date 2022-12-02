@@ -154,6 +154,7 @@
         };
 
         regibtn.onclick = function () {
+            debugger;
             let myformdata = document.getElementById('formdata');
             let formData = new FormData(myformdata);
             let filelist = document.getElementById("ex_file").files;

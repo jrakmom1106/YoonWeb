@@ -83,6 +83,36 @@
         <br>
         <br>
         <button type="button" class="ui-button" id="_modal_popup_btn">모달 팝업 생성 버튼</button>
+        <br>
+        <br>
+
+        <div class="menu_tree_management">
+            <div class="title">메뉴 관리</div>
+            <div class="table_ctn">
+                <div class="menu_tree">
+                    <ul>
+                        <li>
+                            <input type="checkbox" id="ch1">
+                            <label for="ch1">기준경보 관리</label>
+                            <ul class="sub_menu">
+
+                                <li>
+                                    <input type="checkbox" id="ch2">
+                                    <label for="ch2">depth2</label>
+                                    <ul class="sub_menu">
+                                        <li>depth2</li>
+                                        <li>depth2</li>
+                                    </ul>
+                                </li>
+                                <li>프로젝트 정보관리</li>
+                                <li>설치정보 등록</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <%--<form id="frm">
             <input type="text" placeholder="제목" id="subject" name="subject">
             <input type="text" placeholder="내용" id="writecontent" name="content">
@@ -299,7 +329,7 @@
 
 
         modal_popup_btn.onclick = async function(){
-            let confirm = await $commons.ui.dialogs.confirm('test');
+            let confirm = await $commons.ui.dialogs.confirm('모달에 띄울 컨텐츠 내용이 여기에 표시됩니다.');
 
 
 

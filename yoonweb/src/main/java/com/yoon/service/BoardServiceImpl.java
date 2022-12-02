@@ -28,8 +28,9 @@ public class BoardServiceImpl implements BoardService{
     public void boardWrite(Map<String, Object> param) throws Exception {
         boardmapper.boardWrite(param);
 
-        if(param.containsKey("filelist")){
-            List<MultipartFile> list = (List<MultipartFile>) param.get("filelist");
+        if(param.containsKey("files")){
+            System.out.println("testtest"+ param.get("files"));
+            List<MultipartFile> list = (List<MultipartFile>) param.get("files");
 
             System.out.println("list = " + list);
 
