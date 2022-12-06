@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+<!--  // 알리아스 : 클래스 이름이 길때 줄임말 설정해줌. 이 프로젝트에선 사용 X -->
+<!--     <typeAliases> -->
+<!--     </typeAliases> -->
+ 
+<!--     //DB연결 참조. 여기서 연결 설정해도되지만 context.xml에 커넥션풀 설정해놓은게 있으므로 가져다쓴다. -->
+<!--     <environments default=""> -->
+<!--         <environment id=""> -->
+<!--             <transactionManager type="JDBC" /> -->
+<!--             <dataSource type="JNDI"> -->
+<!--                 <property name="data_source"  -->
+<!--                 value="java:comp/env/oraDB" /> -->
+<!--             </dataSource> -->
+<!--         </environment> -->
+<!--     </environments> -->
+<!--     //실제 sql 쿼리 맵핑 -->
+<!--     //서버가 올라올때 이 sqlMapConfig를 가장 먼저 읽어들여 매퍼 리소스를 읽고 쿼리를 맵핑한다. -->
+
+    <mappers>
+        <mapper resource="com/yoon/mapper/*.xml" />
+    </mappers>
+    
+</configuration>
