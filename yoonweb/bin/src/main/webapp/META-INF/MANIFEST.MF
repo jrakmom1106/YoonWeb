@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Created-By: IntelliJ IDEA
-Built-By: 82105
-Build-Jdk: version 11.0.13
-Implementation-Title: yoonweb
-Implementation-Version: 0.0.1-SNAPSHOT
-Implementation-Vendor-Id: com
-Main-Class: ${start-class}
-
