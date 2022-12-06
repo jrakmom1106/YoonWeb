@@ -1,19 +1,21 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
 
 </head>
 <body>
-	<div id="content">
-		<div id="contentwrap">
-			<h2>menu3</h2>
+<div id="content">
+    <div id="contentwrap">
+        <h2>menu3</h2>
 
-			<input type="file" id="file3" /> <label for="file3">파일선택</label> <br>
-			<input type="button" class="ui-button" id="_excel_upload_btn">엑셀
-			업로드
-			</input>
-		</div>
-	</div>
+        <input type="file" id="file3"/>
+        <label for="file3">파일선택</label>
+
+
+        <br>
+        <input type="button" class="ui-button" id="_excel_upload_btn">엑셀 업로드</button>
+    </div>
+</div>
 </body>
 
 
@@ -22,35 +24,29 @@
 
 
 
-    let excelData = {};
+    let excelData = [];
 
 
     $(document).ready(function () {
 
         let reader = new FileReader();
 
-       const api = _api();
-        
-        
         $("#file3").on('change',function(){
 
             //파일선택이 바뀔때 마다 실행 이벤트
             uploadStart(this);
         })
 
-        
         $("#_excel_upload_btn").on('click',function(){
-			//TODO here
-		console.log('testhere');
-			
-		console.log(excelData);
-		
-		 api.registerExcelFileUpload(JSON.stringify(excelData)); 
-		
-						
+
+
+
         });
 
-        
+
+
+
+
 
         function uploadStart(data){
             //데이터 타입 체크 가능
@@ -153,34 +149,12 @@
 
 
         }
-        
-        
-        function _api(){
-        	return{
-        		registerExcelFileUpload : function(data) {
-        				return $.ajax({
-        	                url: '/excel/excelUpload.do',
-        	                type : "POST",
-        	                contentType : "application/json",
-        	                data : data,
-        	                success : function (responseData){
-        	                    clearInputBox();
-        	                    alert('엑셀 파일 업로드가 완료되었습니다.');
 
 
-        	                },
-        	                error: function(){
 
-        	                }
-        	            });
 
-        			}
-        			
-        		}
-        		
-        	}
-        	
-        
+
+
 
 
     })

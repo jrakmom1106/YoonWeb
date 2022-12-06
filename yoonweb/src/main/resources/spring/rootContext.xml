@@ -19,29 +19,15 @@
         <constructor-arg ref="hikariConfig"></constructor-arg>
     </bean>
 
- <mybatis-spring:scan base-package="com.yoon.mapper"/>
-
-    <!--
+    <mybatis-spring:scan base-package="com.yoon.mapper"/>
     <context:component-scan base-package="com.yoon.mapper"></context:component-scan>
     <context:component-scan base-package="com.yoon.model"></context:component-scan>
     <context:component-scan base-package="com.yoon.service"></context:component-scan>
     <context:component-scan base-package="com.yoon.controller"></context:component-scan>
- -->
- 	<context:component-scan base-package="com.yoon">
- 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
- 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
- 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
- 	</context:component-scan>
- 	
+
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="datasource"></property>
-        <property name="configLocation"  value="sqlmap/mybatis-config.xml"></property>
     </bean>
-    
-    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
-    destroy-method="clearCache">
-    <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
-	</bean>
 
 </beans>
