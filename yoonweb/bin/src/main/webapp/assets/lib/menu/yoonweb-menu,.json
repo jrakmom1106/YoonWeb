@@ -1,0 +1,15 @@
+{
+  "M0000000_DM1" :{
+  "title" : "메뉴1",
+  "parent" : "M0000000",
+  "url" : "/p/menu1_viw.view",
+  "child": {}
+},
+
+  "M0000001" :{
+    "title" : "메뉴2",
+    "parent" : "M0000000",
+    "url" : "/p/menu2_viw.view",
+    "child": {}
+  }
+}

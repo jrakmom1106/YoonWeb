@@ -1,56 +1,34 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
 
 </head>
 <body>
-	<div id="content">
-		<div id="contentwrap">
-			<h2>menu3</h2>
+<div id="content">
+    <div id="contentwrap">
+        <h2>menu3</h2>
 
-			<input type="file" id="file3" /> <label for="file3">파일선택</label> <br>
-			<input type="button" class="ui-button" id="_excel_upload_btn">엑셀
-			업로드
-			</input>
-		</div>
-	</div>
+        <input type="file" id="file3"/>
+        <label for="file3">파일선택</label>
+    </div>
+</div>
 </body>
 
 
 <script src="/js/xlsx.full.min.js"></script>
 <script>
 
+    let reader = new FileReader();
+
+    let excelData = [];
+
+    let initialize = function (){
 
 
-    let excelData = {};
-
-
-    $(document).ready(function () {
-
-        let reader = new FileReader();
-
-       const api = _api();
-        
-        
         $("#file3").on('change',function(){
-
             //파일선택이 바뀔때 마다 실행 이벤트
             uploadStart(this);
         })
-
-        
-        $("#_excel_upload_btn").on('click',function(){
-			//TODO here
-		console.log('testhere');
-			
-		console.log(excelData);
-		
-		 api.registerExcelFileUpload(JSON.stringify(excelData)); 
-		
-						
-        });
-
-        
 
         function uploadStart(data){
             //데이터 타입 체크 가능
@@ -67,7 +45,7 @@
         }
 
         function loadExcel(excelInputData){
-            debugger;
+
             let _sheet = [];
 
             const data = excelInputData.result; // binary 데이터
@@ -88,9 +66,8 @@
                     ]
                 });
 
-                if(rows[0].column1 !== '고객아이디' || rows[0].column2 !== '고객이름' || rows[0].column3 !=='고객 전화번호'){
+                if(rows[0].column1 !== '컬럼 1 이름' || rows[0].column2 !== '컬럼 2 이름'){
                     alert('지정된 양식만 등록할 수 있습니다.');
-                    return ;
 
                 }
 
@@ -109,12 +86,6 @@
                     let chkMsg = '';
                     for(let i = 0 ; i < _sheet.length ; i++){
                         const e = _sheet[i]; // 1row 에 진입
-
-
-                        if(e.NO === '' || e.NO == null){
-                            chkMsg = '고객 아이디는 필수 항목 입니다.'
-                            break;
-                        }
 
                         if(e.PHONE === '' || e.PHONE == null){
                             chkMsg = '전화번호는 필수항목 입니다.'
@@ -153,36 +124,14 @@
 
 
         }
-        
-        
-        function _api(){
-        	return{
-        		registerExcelFileUpload : function(data) {
-        				return $.ajax({
-        	                url: '/excel/excelUpload.do',
-        	                type : "POST",
-        	                contentType : "application/json",
-        	                data : data,
-        	                success : function (responseData){
-        	                    clearInputBox();
-        	                    alert('엑셀 파일 업로드가 완료되었습니다.');
 
 
-        	                },
-        	                error: function(){
 
-        	                }
-        	            });
-
-        			}
-        			
-        		}
-        		
-        	}
-        	
-        
+    }
 
 
+    $(document).ready(function () {
+        initialize();
     })
 
 
